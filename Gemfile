@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 gemspec
 
@@ -10,6 +10,11 @@ group :development do
   gem 'mocha'
   gem "rake"
   gem "yard"
+
+  platforms :ruby_21 do
+    gem "activerecord", "< 5.0"
+    gem "activesupport", "< 5.0"
+  end
 
   platforms :ruby do
     gem "sqlite3"

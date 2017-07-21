@@ -249,4 +249,30 @@ class EntityTest < ActiveSupport::TestCase
     assert_equal [domain.entity_by_name("Galleon"), domain.entity_by_name("Stronghold")],
       domain.entity_by_name("Defensible").children
   end
+
+  # Namespace ===================================================================
+  test "namespace should return nil for models outside modules" do
+    create_module_model "Plane"
+    assert_nil create_entity(Plane).namespace
+  end
+
+  test "namespace should return the module name for single-module models" do
+    create_module_model "Saw::Plane"
+    assert_equal "Saw", create_entity(Saw::Plane).namespace
+  end
+
+  test "namespace should return the module path if more than one module" do
+    create_module_model "Augur::Chisel::Saw::Plane"
+    assert_equal "Augur::Chisel::Saw", create_entity(Augur::Chisel::Saw::Plane).namespace
+  end
+  
+  test "namespace defaults to nil" do
+    create_model "Foo"
+    assert_nil create_entity(Foo).namespace
+  end
+
+  test "namespace returns appropriate modules" do
+    entity = Domain::Entity.new(Domain.new, "Foo::Bar::Qux")
+    assert_equal "Foo::Bar", entity.namespace
+  end
 end

@@ -23,16 +23,16 @@ Requirements
 ---------------
 
 * Ruby 1.9.3+
-* ActiveRecord 3.x
+* ActiveRecord 3.x - 5.0.x
 
 Getting started
 ---------------
 
 See the [installation instructions](https://voormedia.github.io/rails-erd/install.html) for a complete description of how to install Rails ERD. Here's a summary:
 
-* Install Graphviz 2.22+ ([how?](https://voormedia.github.io/rails-erd/install.html))
+* Install Graphviz 2.22+ ([how?](https://voormedia.github.io/rails-erd/install.html)). On MacOS with Homebrew run `brew install graphviz`.
 
-* Add <tt>gem "rails-erd"</tt> to your application's Gemfile
+* Add <tt>gem 'rails-erd', require: false, group: :development</tt> to your application's Gemfile
 
 * Run <tt>bundle exec erd</tt>
 
@@ -41,7 +41,7 @@ See the [installation instructions](https://voormedia.github.io/rails-erd/instal
 
 Rails ERD has the ability to be configured via the command line or through the use of a YAML file with configuration options set. It will look for this file first at `~/.erdconfig` and then `./.erdconfig` (which will override any settings in `~/.erdconfig`). The format of the file is as follows (shown here with the default settings used if no `.erdconfig` is found). More information on [customization options](https://voormedia.github.io/rails-erd/customise.html) can be found in Rails ERD's project documentation.
 
-```
+```yaml
 attributes:
   - content
   - foreign_key
@@ -63,8 +63,14 @@ only: null
 only_recursion_depth: null
 prepend_primary: false
 cluster: false
+splines: spline
 ```
 
+Auto generation
+---------------
+
+* Run <tt>rails generate erd:install</tt>
+* Run <tt>rails db:migrate</tt>, then the diagram is generated
 
 Learn more
 ----------
